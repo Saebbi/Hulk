@@ -15,7 +15,7 @@
       <isBad>false</isBad>
     </HediffDef>
 
-  <Werewolf.WerewolfFormDef>
+  <Hulk.HulkFormDef>
     <defName>Hulk</defName>
     <label>Hulk</label>
     <description>The Hulk is a being of immense strenght and durability. </description>
@@ -34,14 +34,14 @@
     <rageFactorPerLevelMax>60.0</rageFactorPerLevelMax>
     <transformSound>ROM_Werewolf_GlabroHowl</transformSound>
 
-  </Werewolf.WerewolfFormDef>
+  </Hulk.HulkFormDef>
   <HediffDef ParentName="ROMWW_TransformedBody">
     <defName>HulkHediff</defName>
     <hediffClass>HediffWithComps</hediffClass>
     <label>Hulk Form</label>
 
     <comps>
-      <li Class="Werewolf.HediffCompProperties_Rage">
+      <li Class="Hulk.HediffCompProperties_Rage">
         <baseRageSeconds>60</baseRageSeconds>
       </li>
     </comps>
