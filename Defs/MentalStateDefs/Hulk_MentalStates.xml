@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <MentalStateDef Abstract="True" Name="Hulk_BaseMentalState">
+    <minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
+    <recoveryMtbDays>0.3</recoveryMtbDays>
+  </MentalStateDef>
+
+  <!-- Mental breaks: extreme -->
+
+  <MentalBreakDef>
+    <defName>HulkFury</defName>
+    <mentalState>HulkFury</mentalState>
+    <baseCommonality>0.06</baseCommonality>
+    <intensity>Extreme</intensity>
+  </MentalBreakDef>
+  <MentalStateDef ParentName="Hulk_BaseMentalState">
+    <defName>HulkFury</defName>
+    <stateClass>Werewolf.MentalState_WerewolfFury</stateClass>
+    <label>Hulk fury</label>
+    <category>Aggro</category>
+    <moodRecoveryThought>Catharsis</moodRecoveryThought>
+    <blockNormalThoughts>true</blockNormalThoughts>
+    <nameColor>(0.9,0.2,0.5)</nameColor>
+    <beginLetterLabel>hulk fury</beginLetterLabel>
+    <beginLetter>{0} has become a maddened hulk!</beginLetter>
+    <beginLetterDef>ThreatBig</beginLetterDef>
+    <minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
+    <recoveryMtbDays>0.3</recoveryMtbDays>
+    <maxTicksBeforeRecovery>60000</maxTicksBeforeRecovery>
+    <recoveryMessage>{0}'s fury has come to an end.</recoveryMessage>
+    <baseInspectLine>Mental state: Berserk</baseInspectLine>
+    <stateEffecter>Berserk</stateEffecter>
+    <tale>MentalStateBerserk</tale>
+    <recoverFromSleep>true</recoverFromSleep>
+    <unspawnedCanDo>true</unspawnedCanDo>
+  </MentalStateDef>
+
+</Defs>

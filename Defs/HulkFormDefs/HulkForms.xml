@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <!-- Added body parts -->
+
+	<HediffDef Name="ROMWW_TransformedBody" Abstract="True">
+      <hediffClass>Werewolf.HediffWithComps_WerewolfExtraInfo</hediffClass>
+      <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
+      <scenarioCanAdd>false</scenarioCanAdd>
+      <maxSeverity>1.0</maxSeverity>
+    </HediffDef>
+	
+    <HediffDef Name="ROMWW_TransformedBodyPartBase" Abstract="True">
+      <hediffClass>JecsTools.Hediff_TransformedPart</hediffClass>
+      <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
+      <isBad>false</isBad>
+    </HediffDef>
+
+  <Werewolf.WerewolfFormDef>
+    <defName>Hulk</defName>
+    <label>Hulk</label>
+    <description>The Hulk is a being of immense strenght and durability. </description>
+    <graphicData>
+      <texPath>Things/Pawn/Animal/Werewolf/Glabro/XenGlabro</texPath>
+      <drawSize>1.3</drawSize>
+      <graphicClass>Graphic_Multi</graphicClass>
+    </graphicData>
+    <formHediff>HulkHediff</formHediff>
+    <clawHediff>HulkSmash</clawHediff>
+    <iconTexPath>UI/Button/FormGlabro</iconTexPath>
+    <rageUsageFactor>1.0</rageUsageFactor>
+    <sizeFactor>1.4</sizeFactor>
+    <healthFactor>10.0</healthFactor>
+    <rageFactorPerLevel>0.5</rageFactorPerLevel>
+    <rageFactorPerLevelMax>60.0</rageFactorPerLevelMax>
+    <transformSound>ROM_Werewolf_GlabroHowl</transformSound>
+
+  </Werewolf.WerewolfFormDef>
+  <HediffDef ParentName="ROMWW_TransformedBody">
+    <defName>HulkHediff</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>Hulk Form</label>
+
+    <comps>
+      <li Class="Werewolf.HediffCompProperties_Rage">
+        <baseRageSeconds>60</baseRageSeconds>
+      </li>
+    </comps>
+      <stages>
+        <li>
+          <painFactor>0.05</painFactor>
+          <capMods>
+			<li>
+				<capacity>Sight</capacity>
+				<offset>0.25</offset>
+			</li>
+            <li>
+              <capacity>Moving</capacity>
+              <offset>0.50</offset>
+            </li>
+          </capMods>
+          <statOffsets>
+            <MoveSpeed>3.50</MoveSpeed>
+            <MentalBreakThreshold>0.6</MentalBreakThreshold>
+            <ToxicSensitivity>-1.0</ToxicSensitivity>
+            <PsychicSensitivity>0.45</PsychicSensitivity>
+            <GlobalLearningFactor>0.8</GlobalLearningFactor>
+            <ComfyTemperatureMin>-100.0</ComfyTemperatureMin>
+            <ComfyTemperatureMax>1000000.0</ComfyTemperatureMax>
+            <ImmunityGainSpeed>10.0</ImmunityGainSpeed>
+            <CarryingCapacity>50000</CarryingCapacity>
+            <MeatAmount>10</MeatAmount>
+            <MeleeHitChance>40</MeleeHitChance>
+            <MeleeDodgeChance>30</MeleeDodgeChance>
+          </statOffsets>
+        </li>
+      </stages>
+  </HediffDef>
+  <HediffDef ParentName="ROMWW_TransformedBodyPartBase">
+    <defName>HulkSmash</defName>
+    <label>Hulk Smash</label>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+        <tools>
+          <li>
+		    <label>Smash</label>
+			<capacities>
+			  <li>Blunt</li>
+		    </capacities>
+			<power>90</power>
+            <cooldownTime>1.9</cooldownTime>
+          </li>
+        </tools>
+      </li>
+    </comps>
+    <addedPartProps>
+      <isGoodWeapon>true</isGoodWeapon>
+      <isBionic>false</isBionic>
+      <isSolid>true</isSolid>
+      <partEfficiency>2.0</partEfficiency>
+    </addedPartProps>
+  </HediffDef>
+
+</Defs>

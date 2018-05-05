@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TraitDef>
+    <defName>Hulk</defName>
+    <commonality>0.1</commonality>
+    <degreeDatas>
+      <li>
+        <label>Hulk</label>
+        <description>NAME was exposed to a huge amount of radiation, but instead of dying, he began to share his body with a beast known as the Hulk. A being of immense strenght and durability.</description>
+		    <degree>1</degree>
+        <commonality>1</commonality>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
+
+</Defs>
