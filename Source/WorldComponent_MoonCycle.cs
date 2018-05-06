@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using RimWorld.Planet;
 using System.Linq;
 
-namespace Werewolf
+namespace Hulk
 {
     public class WorldComponent_MoonCycle : WorldComponent
     {
@@ -73,7 +73,7 @@ namespace Werewolf
             }
         }
 
-        public Dictionary<Pawn, int> recentWerewolves = new Dictionary<Pawn, int>();
+        public Dictionary<Pawn, int> recentHulks = new Dictionary<Pawn, int>();
         
         
         public override void WorldComponentTick()
@@ -94,19 +94,19 @@ namespace Werewolf
             }
             
            if (recentWerewolves.Any())
-                recentWerewolves.RemoveAll(x => x.Key.Dead || x.Key.DestroyedOrNull());
-            if (recentWerewolves.Any())
+                recentHulks.RemoveAll(x => x.Key.Dead || x.Key.DestroyedOrNull());
+            if (recentHulks.Any())
             {
                 var recentVampiresKeys = new List<Pawn>(recentWerewolves.Keys);
                 foreach (var key in recentVampiresKeys)
                 {
-                    recentWerewolves[key] += 1;
-                    if (recentWerewolves[key] > 100)
+                    recentHulks[key] += 1;
+                    if (recentHulks[key] > 100)
                     {
-                        recentWerewolves.Remove(key);
+                        recentHulks.Remove(key);
                         if (!key.Spawned || key.Faction == Faction.OfPlayerSilentFail) continue;
-                        Find.LetterStack.ReceiveLetter("ROM_WerewolfEncounterLabel".Translate(),
-                                "ROM_WerewolfEncounterDesc".Translate(key.LabelShort), LetterDefOf.ThreatSmall, key, null);
+                        Find.LetterStack.ReceiveLetter("HulkEncounterLabel".Translate(),
+                                "HulkEncounterDesc".Translate(key.LabelShort), LetterDefOf.ThreatSmall, key, null);
                     }
                 }
             }

@@ -3,7 +3,7 @@
     <!-- Added body parts -->
 
 	<HediffDef Name="ROMWW_TransformedBody" Abstract="True">
-      <hediffClass>Werewolf.HediffWithComps_WerewolfExtraInfo</hediffClass>
+      <hediffClass>Hulk.HediffWithComps_HulkExtraInfo</hediffClass>
       <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
       <scenarioCanAdd>false</scenarioCanAdd>
       <maxSeverity>1.0</maxSeverity>

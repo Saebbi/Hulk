@@ -13,7 +13,7 @@ using Verse.Sound;
 namespace Hulk
 {
     /// 
-    /// CompWerewolf
+    /// CompHulk
     /// Werewolves in RimWorld
     /// ------------
     /// 
@@ -57,6 +57,7 @@ namespace Hulk
 
         public enum State : int
         {
+            Unblooded = 0,
             Hulk = 1
         }
 
@@ -91,7 +92,7 @@ namespace Hulk
                 {
                     hulkForms = new List<HulkForm>
                         {
-                        new HulkForm(WWDefOf.Hulk, 0, Pawn),
+                        new HulkForm(HulkDefOf.Hulk, 0, Pawn),
                         };
                 }
                 return hulkForms;
@@ -104,7 +105,7 @@ namespace Hulk
                 if (isBlooded == null)
                 {
                     isBlooded = false;
-                    if (this?.Pawn?.story?.traits?.GetTrait(WWDefOf.Hulk)?.Degree > 1)
+                    if (this?.Pawn?.story?.traits?.GetTrait(HulkDefOf.ROM_Hulk)?.Degree > 1)
                         isBlooded = true;
                 }
                 return isBlooded.Value;
@@ -119,7 +120,7 @@ namespace Hulk
         public bool CanTransformNow => IsHulk && !IsTransformed && CooldownTicksLeft <= 0;
         public Vector3 Vec3 => Pawn.PositionHeld.ToVector3();
         public Map Map => Pawn.MapHeld;
-        public Trait HulkTrait => Pawn?.story?.traits?.GetTrait(WWDefOf.Hulk);
+        public Trait HulkTrait => Pawn?.story?.traits?.GetTrait(HulkDefOf.ROM_Hulk);
         public HulkForm HighestLevelForm => HulkForms.MaxBy(x => x.level);
         #endregion Properties
 
@@ -154,18 +155,18 @@ namespace Hulk
         public override float CombatPoints()
         {
             //Log.Message("Combat points called");
-            if (forbiddenWolfhood) return 0;
+            if (forbiddenHulkhood) return 0;
             if (HulkForms.NullOrEmpty()) return 400;
             var combatPoints = HulkForms.Max(x => x.level) * 400;
             //Log.Message("combatPoints: " + combatPoints);
             return combatPoints;
         }
 
-        private bool forbiddenWolfhood = false;
+        private bool forbiddenHulkhood = false;
         public override void DisableAbilityUser()
         {
             Pawn.story.traits.allTraits.Remove(HulkTrait);
-            forbiddenWolfhood = true;
+            forbiddenHulkhood = true;
         }
 
         /// Gives a random new transformation from full moon furies.
@@ -221,63 +222,6 @@ namespace Hulk
         }
 
         #region Transform Effects
-
-        /// Returns a Werewolf form depending on the state of the character.
-        private HulkForm ResolveRandomHulkForm()
-        {
-            HulkForm formToTake = null;
-            switch ((State)HulkTrait.Degree)
-            {
-                //Unknown werewolves have a chance of becoming Metis Werewolves.
-                case State.Unknown:
-
-                    //Check Metis chance and replace the werewolf trait.
-                    Pawn.story.traits.allTraits.Remove(HulkTrait);
-                    Trait newWerewolfTrait;
-                    float rand = Rand.Value;
-                    if (rand > metisChance)
-                    {
-                        newWerewolfTrait = new Trait(WWDefOf.ROM_Werewolf, (int)State.Werewolf);
-                        formToTake = WerewolfForms.RandomElement();
-                    }
-                    else
-                    {
-                        newWerewolfTrait = new Trait(WWDefOf.ROM_Werewolf, (int)State.Metis);
-                        formToTake = WerewolfForms.FirstOrDefault(x => x.def == WWDefOf.ROM_Metis);
-                    }
-                    Pawn.story.traits.GainTrait(newWerewolfTrait);
-
-                    //Just in-case, be sure to flag the Werewolf as unblooded.
-                    IsBlooded = false;
-                    break;
-
-                //Metis werewolves can ONLY become Metis werewolves.
-                case State.Metis:
-                    formToTake = WerewolfForms.FirstOrDefault(x => x.def == WWDefOf.ROM_Metis);
-                    break;
-
-                //Unblooded Werewolves do not become Metis.
-                case State.Unblooded:
-                    if (metisForm != null) WerewolfForms.Remove(metisForm);
-                    formToTake = WerewolfForms.RandomElement();
-
-                    //Replace trait.
-                    Pawn.story.traits.allTraits.Remove(WerewolfTrait);
-                    Pawn.story.traits.GainTrait(new Trait(WWDefOf.ROM_Werewolf, (int)State.Werewolf));
-                    formToTake = WerewolfForms.RandomElement();
-
-                    isBlooded = false; //Just in-case
-                    break;
-
-                //Regular Werewolves and Pack Members do not become Metis.
-                case State.Werewolf:
-                case State.PackMember:
-                    if (metisForm != null) WerewolfForms.Remove(metisForm);
-                    formToTake = WerewolfForms.RandomElement();
-                    break;
-            }
-            return formToTake;
-        }
 
         /// Burst out of any containers (e.g. Cryptosleep pods)
         private void ResolveContainment()
@@ -335,8 +279,8 @@ namespace Hulk
                                 //Log.Message(e.toString());
                             }
                             /// ////////////////////////////////////////////////////////////
-                            WerewolfUtility.SpawnNaturalPartIfClean(Pawn, rec, Pawn.Position, Pawn.Map);
-                            WerewolfUtility.SpawnThingsFromHediffs(Pawn, rec, Pawn.Position, Pawn.Map);
+                            HulkUtility.SpawnNaturalPartIfClean(Pawn, rec, Pawn.Position, Pawn.Map);
+                            HulkUtility.SpawnThingsFromHediffs(Pawn, rec, Pawn.Position, Pawn.Map);
                             Pawn.health.hediffSet.hediffs.Remove(hediff_AddedPart);
                             Pawn.health.RestorePart(rec);
                             if (Pawn.Faction == Faction.OfPlayer && showMessage)
@@ -348,7 +292,7 @@ namespace Hulk
                                 hediff_AddedPart.Label
                                 }), MessageTypeDefOf.NegativeEvent);//MessageTypeDefOf.NegativeEvent);
 
-                                LessonAutoActivator.TeachOpportunity(WWDefOf.Hulk_ConceptBionics, this.Pawn, OpportunityType.Critical);
+                                LessonAutoActivator.TeachOpportunity(HulkDefOf.Hulk_ConceptBionics, this.Pawn, OpportunityType.Critical);
                             }
                         }
                     }
@@ -433,7 +377,7 @@ namespace Hulk
             }
 
             if (giveFuryMentalState)
-                p.mindState.mentalStateHandler.TryStartMentalState(WWDefOf.HulkFury, "ROM_MoonCycle_FullMoonArgless".Translate(), true);
+                p.mindState.mentalStateHandler.TryStartMentalState(HulkDefOf.HulkFury, "ROM_MoonCycle_FullMoonArgless".Translate(), true);
 
 
         }
@@ -707,17 +651,17 @@ namespace Hulk
         /// Give AI Werewolves levels in different forms.
         public void ResolveAIFactionSpawns()
         {
-            if (!factionResolved && Pawn?.Faction?.def?.defName == "ROM_WerewolfClan" && Pawn?.kindDef?.defName != "ROM_WerewolfStraggler" && !forbiddenWolfhood)
+            if (!factionResolved && Pawn?.Faction?.def?.defName == "HulkClan" && Pawn?.kindDef?.defName != "ROM_HulkStraggler" && !forbiddenHulkhood)
             {
                 factionResolved = true;
 
 
-                if (!Pawn.story.traits.HasTrait(WWDefOf.Hulk))
+                if (!Pawn.story.traits.HasTrait(HulkDefOf.ROM_Hulk))
                 {
-                    Trait newTrait = new Trait(WWDefOf.Hulk, 2, true);
-                    if (Pawn.kindDef.defName == "ROM_WerewolfNewBlood")
+                    Trait newTrait = new Trait(HulkDefOf.ROM_Hulk, 2, true);
+                    if (Pawn.kindDef.defName == "Incredible_Hulk")
                     {
-                        newTrait = new Trait(WWDefOf.Hulk, -1, true);
+                        newTrait = new Trait(HulkDefOf.ROM_Hulk, -1, true);
 
                     }
 
@@ -729,39 +673,14 @@ namespace Hulk
                 //Give random werewolf abilities
                 switch (Pawn.kindDef.defName)
                 {
-                    case "ROM_WolfHandler":
-
-                        SpawnWolves(Rand.Range(1, 3));
-                        LevelUp(WWDefOf.ROM_Hispo, Rand.Range(1, 3));
-                        LevelUp(WWDefOf.ROM_Lupus, Rand.Range(1, 3));
-                        break;
-
-                    case "ROM_Werewolf":
-                        LevelUp(WWDefOf.ROM_Glabro, Rand.Range(3, 4));
-                        LevelUp(WWDefOf.ROM_Crinos, Rand.Range(3, 4));
-                        LevelUp(WWDefOf.ROM_Hispo, Rand.Range(3, 4));
-                        LevelUp(WWDefOf.ROM_Lupus, Rand.Range(3, 4));
-                        break;
-
-                    case "ROM_WerewolfFang":
-                        LevelUp(WWDefOf.ROM_Glabro, Rand.Range(1, 6));
-                        LevelUp(WWDefOf.ROM_Crinos, Rand.Range(4, 6));
-                        LevelUp(WWDefOf.ROM_Hispo, Rand.Range(4, 6));
-                        LevelUp(WWDefOf.ROM_Lupus, Rand.Range(4, 6));
-                        break;
-
-                    case "ROM_WerewolfAlpha":
-                        SpawnWolves(Rand.Range(3, 4));
-                        LevelUp(WWDefOf.ROM_Glabro, Rand.Range(1, 2));
-                        LevelUp(WWDefOf.ROM_Crinos, Rand.Range(6, 8));
-                        LevelUp(WWDefOf.ROM_Hispo, Rand.Range(6, 8));
-                        LevelUp(WWDefOf.ROM_Lupus, Rand.Range(6, 8));
+                    case "Hulk":
+                        LevelUp(HulkDefOf.Hulk, Rand.Range(3, 4));
                         break;
                 }
 
                 //Manage the AI sensibly.
                 if (Pawn?.mindState?.duty?.def == DutyDefOf.AssaultColony && IsBlooded)
-                    Pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("ROM_WerewolfAssault"));
+                    Pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("HulkAssault"));
             }
         }
 
@@ -899,7 +818,7 @@ namespace Hulk
             }
 
         }
-        public override bool TryTransformPawn() => IsHulk || Pawn?.Faction?.def?.defName == "ROM_WerewolfClan";
+        public override bool TryTransformPawn() => IsHulk || Pawn?.Faction?.def?.defName == "HulkClan";
         public override void PostExposeData()
         {
             base.PostExposeData();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Verse;
 
-namespace Werewolf
+namespace Hulk
 {
     public class Moon : IExposable, ILoadReferenceable
     {

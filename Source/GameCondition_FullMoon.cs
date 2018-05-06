@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Werewolf
+namespace Hulk
 {
     public class GameCondition_FullMoon : GameCondition
     {
@@ -41,7 +41,7 @@ namespace Werewolf
                             m.TryGainMemory(WWDefOf.ROMWW_SawFullMoon);
                         }
 
-                        if (pawn?.GetComp<CompWerewolf>() is CompWerewolf w && ShouldTransform(pawn, w))
+                        if (pawn?.GetComp<CompHulk>() is CompHulk w && ShouldTransform(pawn, w))
                         {
                             if (pawn.Faction == Faction.OfPlayerSilentFail)
                                 w.TransformRandom(true);
@@ -55,7 +55,7 @@ namespace Werewolf
             }
         }
 
-        private bool ShouldTransform(Pawn pawn, CompWerewolf w) => w.IsWerewolf && !w.IsTransformed &&
+        private bool ShouldTransform(Pawn pawn, CompHulk w) => w.IsHulk && !w.IsTransformed &&
                                                         (!w.IsBlooded || w.FuryToggled) &&
                                                         !pawn.PositionHeld.Fogged(pawn.MapHeld);
 

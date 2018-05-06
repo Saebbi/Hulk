@@ -220,7 +220,7 @@ namespace Hulk
             for (int i = 0; i < __instance.lord.ownedPawns.Count; i++)
             {
                 if (__instance.lord.ownedPawns[i] is Pawn p && p.GetComp<CompHulk>() is CompHulk w && w.IsHulk)
-                    p.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("ROM_WerewolfAssault"));
+                    p.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("HulkAssault"));
             }
 
         }

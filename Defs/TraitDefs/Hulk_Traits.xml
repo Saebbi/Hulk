@@ -2,7 +2,7 @@
 <Defs>
 
   <TraitDef>
-    <defName>Hulk</defName>
+    <defName>ROM_Hulk</defName>
     <commonality>0.1</commonality>
     <degreeDatas>
       <li>

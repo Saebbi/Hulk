@@ -16,7 +16,7 @@
   </MentalBreakDef>
   <MentalStateDef ParentName="Hulk_BaseMentalState">
     <defName>HulkFury</defName>
-    <stateClass>Werewolf.MentalState_WerewolfFury</stateClass>
+    <stateClass>Hulk.MentalState_HulkFury</stateClass>
     <label>Hulk fury</label>
     <category>Aggro</category>
     <moodRecoveryThought>Catharsis</moodRecoveryThought>

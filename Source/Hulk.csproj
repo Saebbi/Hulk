@@ -7,8 +7,8 @@
     <ProjectGuid>{3A4FB893-1148-4E16-B548-867647DF1724}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Werewolf</RootNamespace>
-    <AssemblyName>Werewolf</AssemblyName>
+    <RootNamespace>Hulk</RootNamespace>
+    <AssemblyName>Hulk</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -63,9 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\JobGiver_ManageHulkForm.cs" />
-    <Compile Include="Command_WerewolfButton.cs" />
+    <Compile Include="Command_HulkButton.cs" />
     <Compile Include="HediffWithComps_HulkExtraInfo.cs" />
-    <Compile Include="SilverTreated\CompSilverTreated.cs" />
     <Compile Include="CompHulk.cs" />
     <Compile Include="GameCondition_FullMoon.cs" />
     <Compile Include="GameCondition_MoonCycle.cs" />
@@ -74,14 +73,14 @@
     <Compile Include="HediffCompProperties_Rage.cs" />
     <Compile Include="HediffComp_Rage.cs" />
     <Compile Include="MentalState_HulkFury.cs" />
-    <Compile Include="WerewolfFloatMenuPatch.cs" />
+    <Compile Include="HulkFloatMenuPatch.cs" />
     <Compile Include="HulkUtility.cs" />
     <Compile Include="WorldComponent_MoonCycle.cs" />
     <Compile Include="Moon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HulkForm.cs" />
     <Compile Include="HulkFormDef.cs" />
-    <Compile Include="WWDefOf.cs" />
+    <Compile Include="HulkDefOf.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

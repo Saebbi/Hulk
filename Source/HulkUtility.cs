@@ -29,14 +29,14 @@ namespace Hulk
         }
 
 
-        // RimWorld.WerewolfUtility
+        // RimWorld.HulkUtility
         public static bool IsCleanAndDroppable(Pawn pawn, BodyPartRecord part)
         {
             return !pawn.Dead && !pawn.RaceProps.Animal && part.def.spawnThingOnRemoved != null && HulkUtility.IsClean(pawn, part);
         }
 
 
-        // RimWorld.WerewolfUtility
+        // RimWorld.HulkUtility
         public static Thing SpawnNaturalPartIfClean(Pawn pawn, BodyPartRecord part, IntVec3 pos, Map map)
         {
             if (WerewolfUtility.IsCleanAndDroppable(pawn, part))
@@ -47,7 +47,7 @@ namespace Hulk
         }
 
 
-        // RimWorld.WerewolfUtility
+        // RimWorld.HulkUtility
         public static void SpawnThingsFromHediffs(Pawn pawn, BodyPartRecord part, IntVec3 pos, Map map)
         {
             if (!pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined).Contains(part))

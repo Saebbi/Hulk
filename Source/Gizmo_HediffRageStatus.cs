@@ -2,7 +2,7 @@
 using UnityEngine;
 using Verse;
 
-namespace Werewolf
+namespace Hulk
 {
     [StaticConstructorOnStartup]
     internal class Gizmo_HediffRageStatus : Gizmo

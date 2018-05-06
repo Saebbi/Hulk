@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	
+	<!--===================== Concepts taught through the learning readout, when opportunities arise ===================-->
+
+	<ConceptDef>
+		<defName>Hulk_ConceptBionics</defName>
+		<label>Hulk: Bionics</label>
+		<priority>50</priority>
+		<needsOpportunity>True</needsOpportunity>
+		<helpText>Unexperienced Hulk shapeshifter can't properly control their Bionic parts, so they lose them. But when reaching level 5 they are able to control their Transformation in a way that allows them to make use of Bionics.</helpText>
+	</ConceptDef>
+</Defs>

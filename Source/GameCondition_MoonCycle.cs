@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Werewolf
+namespace Hulk
 {
     public class GameCondition_MoonCycle : GameCondition
     {

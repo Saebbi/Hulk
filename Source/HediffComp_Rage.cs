@@ -29,9 +29,9 @@ namespace Hulk
             if (Find.TickManager.TicksGame % 60 == 0)
             {
 
-                //if (!werewolfFlagged && Pawn?.GetComp<CompWerewolf>() is CompWerewolf compWW && compWW.CurrentWerewolfForm != null)
+                //if (!hulkFlagged && Pawn?.GetComp<CompHulk>() is CompHulk compWW && compWW.CurrentHulkForm != null)
                 //{
-                //    werewolfFlagged = true;
+                //    hulkFlagged = true;
                 //    baseRageDuration = null;
                 //    rageRemaining = -999;
                 //}
